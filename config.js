@@ -1,8 +1,8 @@
 module.exports = ({
 	token: "5278187676:AAH2mae3ENdXlyE1ONLfUjK4isxrJDKmZyE",
-	botIsmi: "TeslaGameBot",
-	resmiKanal: "baxbura",
-	raundSayi: 3,
-	saniye: 5000,
+	botIsmi: "ElectroGuessGameBot",
+	resmiKanal: "ElectroProj",
+	raundSayi: 5,
+	saniye: 160,
 	emojiSaniye: 4,
 });
