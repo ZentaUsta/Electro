@@ -43,8 +43,8 @@ const OyunYaratHusnuEhedov = chatId => {
 	return gameStates[chatId]
 }
 const ozelMesaj = isGroup => trueTrim(`
-    *Merhaba,Ben TeslaGameBot Tahmin Oyunu Zamanınızı eğlenceli hale getirimek için\nTelegram oyun botuyum🤖*
-    ${isGroup ? "" : "\n*Temel komutların listesi için /yardim*"}
+    *Merhaba,Ben* __Electro__ *Gruplarınızda Tahmin oyunu oynamak için yaratılmış bir botum\nBeni Grupunuza Ekeleyerek Tahmin oyunu oynaya bilirsiz*
+    ${isGroup ? "" : "\n*Temel komutların listesi için /help*"}
 `)
 
 
@@ -110,14 +110,14 @@ const OyunDurdurHusnuEhedov = (ctx, chatId) => {
 		db.update(chatId, ch => chat)
 		if (top.length > 0) {
 			ctx.replyWithMarkdown(trueTrim(`
-				*🌟 Kazananlar Sıralaması:*
+				*✴️ Kazananlar Sıralaması:*
 
 				${top.sort((a, b) => b.score - a.score).map((member, index) => `${["🏆","🎖","🏅"][index] || "🔸"} ${index + 1}. *${member.firstName}*: ${member.score} ${pluralize(member.score, "puan 🎁", "puan 🎁", "puan 🎁")}`).join("\n")}
 			`))
 		}
 	}
 	else {
-		ctx.reply("🆘 Oyun başlamadı... 🙅🏻\nOyunu Başlat ➡️  /game")
+		ctx.reply("🆘 __Oyun başlamadı__... 🙅🏻\n*Oyunu Başlat* ➡️  /electro")
 	}
 }
 const getRoundMessage = (chatId, round, time) => {
@@ -135,7 +135,7 @@ const getRoundMessage = (chatId, round, time) => {
 	answers = answers.sort((a, b) => gameStates[chatId].answersOrder.indexOf(a.memberId) - gameStates[chatId].answersOrder.indexOf(b.memberId))
 
 	return trueTrim(`
-		*🔹 Raund ${round + 1}/${config.raundSayi}*
+		*♨️ Raund ${round + 1}/${config.raundSayi}*
 		❓ Sizce bu kişi kaç yaşında
 		${answers.length > 0 ? 
 			`\n${answers.map((member, index) => `${index + 1}. *${member.firstName}*: ${member.answer}`).join("\n")}\n`
@@ -198,7 +198,7 @@ const OyunHusnuEhedov = (ctx, chatId) => {
 			if (!top.every(member => member.answer === null)) {
 				ctx.replyWithMarkdown(
 					trueTrim(`
-						✅ Fotoğraftaki Kişi: *${rightAnswer} ${pluralize(rightAnswer, "yaşında", "yaşında", "yaşında")}*\n*⭐️Puan Kazananlar:*
+						✨ *Fotoğraftaki Kişi*: *${rightAnswer} ${pluralize(rightAnswer, "yaşında", "yaşında", "yaşında")}*\n*✴️ Puan Kazananlar:*
 
 						${top.sort((a, b) => b.addScore - a.addScore).map((member, index) => `${["🏆","🎖","🏅"][index] || "🔸"} ${index + 1}. *${member.firstName}*: ${plusminus(member.addScore)}`).join("\n")}
 					`),
@@ -208,7 +208,7 @@ const OyunHusnuEhedov = (ctx, chatId) => {
 				)
 			}
 			else {
-				ctx.reply("Cevap verilmedi, Oyun Durduruldu❕")
+				ctx.reply("*Cevap verilmedi, Oyun Durduruldu❕*")
 				OyunDurdurHusnuEhedov(ctx, chatId)
 				return
 			}
@@ -235,14 +235,14 @@ const OyunHusnuEhedov = (ctx, chatId) => {
 
 
 
-bot.command("game", (ctx) => {
+bot.command("electro", (ctx) => {
 	let message = ctx.update.message
 	if (message.chat.id < 0) {
 		let chatId = message.chat.id
 		let chat = dbGrubAlHusnuEhedov(chatId)
 		if (chat) {
 			if (chat.isPlaying) {
-				return ctx.reply("❗️ Oyun şuan aktif, durdurmak için /stop.")
+				return ctx.reply("❗️ __Oyun şuan aktif, durdurmak için__ */stop*")
 			}
 			else {
 				chat.isPlaying = true
@@ -256,11 +256,11 @@ bot.command("game", (ctx) => {
 		else {
 			dbChatAlHusnuEhedov(chatId)
 		}
-		ctx.replyWithMarkdown("*Yaş Tahmin Oyunu Başladı!*")
+		ctx.replyWithMarkdown("*Yaş Tahmin Oyunu Başladı! 🧔*")
 		OyunHusnuEhedov(ctx, chatId)
 	}
 	else {
-		ctx.reply("🛑 Bu komut gruplar için geçerli")
+		ctx.reply("🛑 *Bu komut gruplar için geçerli*")
 	}
 })
 
@@ -273,7 +273,7 @@ bot.command("stop", (ctx) => {
         OyunDurdurHusnuEhedov(ctx, chatId)
     }
     else {
-        ctx.reply("🛑 Bu komut gruplar için geçerli")
+        ctx.reply("🛑 *Bu komut gruplar için geçerli*")
     }
 })
 
@@ -319,20 +319,20 @@ ${top.sort((a, b) => b.score - a.score).slice(0, 20).map((member, index) => `${[
 				`))
 			}
 			else {
-				ctx.reply("❗️ Bu grupta hiç oyun oynamadınız")
+				ctx.reply("❗️*Bu grupta hiç oyun oynamadınız*")
 			}
 		}
 		else {
-			ctx.reply("🛑 Bu komut gruplar için geçerli")
+			ctx.reply("🛑 *Bu komut gruplar için geçerli*")
 		}
 	}
 	else {
-		ctx.reply("🛑 Bu komut gruplar için geçerli")
+		ctx.reply("🛑 *Bu komut gruplar için geçerli*")
 	}
 })
 
 
-bot.command("g", (ctx) => {
+bot.command("gtop", (ctx) => {
     fs.readFile(dbfile, 'utf8', async function(err, doc) {
         var comments = doc.match(/-100\d+/g)
         let top = []
@@ -355,7 +355,7 @@ bot.command("g", (ctx) => {
             }
             if (top.length > 0) {
                 ctx.replyWithMarkdown(trueTrim(`
-     *🎖Gruplar Üzre En İyi Top-20*\n
+     *🎉 Gruplar Üzre En İyi Top-20*\n
 ${(top).sort((a, b) => b.score - a.score).slice(0, 20).map((member, index) => `${["🏆","🥈","🥉"][index] || "🎲"} ${index + 1}) *${member.firstName}* → ${member.score} ${pluralize(member.score, "puan", "puan", "puan")}`).join("\n")}
                 `))
             }
@@ -368,7 +368,7 @@ bot.start(async (ctx) => {
         reply_markup:{
             inline_keyboard:[
                 [{text:'Botu Grupa Ekle ✅', url:`https://t.me/${config.botIsmi}?startgroup=true`}],
-                [{text:'Resmi Kanalımız 📣', url:`t.me/${config.resmiKanal}`},{text:'VİP Gruplar 💎', callback_data:'vip'}]
+                [{text:'Resmi Kanalımız 📣', url:`t.me/${config.resmiKanal}`},{text:'Komutlar 💡', callback_data:'komutlar'}]
             ]
         }
     })
@@ -377,12 +377,12 @@ bot.start(async (ctx) => {
 
 bot.action('start', ctx=>{
     ctx.deleteMessage()
-    ctx.replyWithMarkdown(`*Merhaba,Ben TeslaGameBot Tahmin Oyunu Zamanınızı eğlenceli hale getirimek için\nTelegram oyun botuyum🤖\n**Temel komutların listesi için /yardim*
+    ctx.replyWithMarkdown(`**Merhaba,Ben** __Electro__ **Gruplarınızda Tahmin oyunu oynamak için yaratılmış bir botum\nBeni Grupunuza Ekeleyerek Tahmin oyunu oynaya bilirsiz**\n**Temel komutların listesi için /yardim*
         `,{
         reply_markup:{
             inline_keyboard:[
                 [{text:'Botu Grupa Ekle ✅', url:`t.me/${config.botIsmi}?startgroup=true`}],
-                [{text:'Resmi Kanalımız 📣', url:`t.me/${config.resmiKanal}`},{text:'VİP Gruplar 💎', callback_data:'vip'}]
+                [{text:'Resmi Kanalımız 📣', url:`t.me/${config.resmiKanal}`},{text:'Komutlar 💡', callback_data:'komutlar'}]
             ]
         }
     })
@@ -390,54 +390,23 @@ bot.action('start', ctx=>{
 
 
 
-bot.action('vip', ctx=>{
+bot.action('komutlar', ctx=>{
     ctx.deleteMessage()
-    ctx.replyWithMarkdown(`*🌍 Ülkeler*`,{
+    ctx.replyWithMarkdown(`Merhaba! "Tahmin" oyunu için\noluşturulmuş bir botum🤖*\n🆘*Bot yalnızca gruplar için tasarlanmıştır!*\n\n_ℹ️Kurallar budur : Sana resimler atıyorum ve sen kategoriye uyğun rakamlarla tahmin etmelisin🕵🏼‍♂️,İlk olarak qrupa ekle ve Grupda medya izini açık olsun unutma! veya Botu yönetici yapın_🗣\n_Sonra Komutlarla ile oyunu başladın_🎯\n*Temel Komutların Listesi👇🏻*\n\n🎲 /electro - _Oyunu Başlat_\n⛔️ /stop - _Oyunu durdurmak_\n📊 /top - _Oyuncuların puanı gösterir_\n_🌍 /gtop - Global Puanlar_\nℹ️ /help - _Size yardım edicek_\n👤 /kullanici - _Kullanıcı hakkında bilgi_\n🆔 /id - _Grup infosu_`,{
         reply_markup:{
             inline_keyboard:[
-                [{text:'🇦🇿 Azərbaycan', callback_data:'AZ'}],
-                [{text:'🇹🇷 Türkiye', callback_data:'TR'}],
                 [{text:'🔙 Geri', callback_data:'start'}]
             ]
         }
     })
 })
-
-// AZƏRBAYCAN GRUP DÜYMƏLƏRİ
-bot.action('AZ', ctx=>{
-    ctx.deleteMessage()
-    ctx.replyWithMarkdown(`*🇦🇿 VİP Gruplar 🏆*`,{
-        reply_markup:{
-            inline_keyboard:[
-                [{text:'1) Lʏᴜᴋꜱ Söʜʙəᴛ/OYUN 🇦🇿', url:'t.me/sohbet_lyuks'}],
-                [{text:'2) 𝐀𝐊𝐌 ~ 𝐒ö𝐡𝐛ə𝐭 𝐐𝐫𝐮𝐩𝐮 🎲', url:'t.me/sohbet_akm'}],
-                [{text:'🔙 Geri', callback_data:'vip'}]
-            ]
-        }
-    })
-})
-
-// TÜRK GRUP DÜYMƏLƏRİ
-bot.action('TR', ctx=>{
-    ctx.deleteMessage()
-    ctx.replyWithMarkdown(`
-*🇹🇷 VİP Gruplar 🏆*
-        `,{
-        reply_markup:{
-            inline_keyboard:[
-                [{text:'𝑺𝒐𝒉𝒃𝒆𝒕 𝑶𝒏𝒍𝒊𝒏𝒆🇹🇷', url:'t.me/sohbet10line'}],
-                [{text:'♔ ƓΛИƓSƬƐŔ ♔', url:'t.me/GNSagain'}],
-                [{text:'🔙 Geri', callback_data:'vip'}]
-            ]
-        }
-    })
-})
+   
 
 
 bot.command("yardim", (ctx) => {
     return ctx.replyWithMarkdown(trueTrim(`
-        *Merhaba! "Tahimin" oyunu için\noluşturulmuş bir botum🤖*\n🆘*Bot yalnızca gruplar için tasarlanmıştır!*\n\n_ℹ️Kurallar budur : Sana resimler atıyorum ve sen kategoriye uyğun rakamlarla tahmin etmelisin🕵🏼‍♂️,İlk olarak qrupa ekle ve Grupda medya izini açık olsun unutma! veya Botu yönetici yapın_🗣\n_Sonra Komutlarla ile oyunu başladın_🎯\n
-          *Temel Komutların Listesi👇🏻*\n\n🎲 /game - _Oyunu Başlat_\n⛔️ /stop - _Oyunu durdurmak_\n📊 /top - _Oyuncuların puanı gösterir_\n_🌍 /g - Global Puanlar_\nℹ️ /yardim - _Size yardım edicek_\n👤 /kullanici - _Kullanıcı hakkında bilgi_\n🆔 /id - _Grup infosu_`))
+        *Merhaba! "Tahmin" oyunu için\noluşturulmuş bir botum🤖*\n🆘*Bot yalnızca gruplar için tasarlanmıştır!*\n\n_ℹ️Kurallar budur : Sana resimler atıyorum ve sen kategoriye uyğun rakamlarla tahmin etmelisin🕵🏼‍♂️,İlk olarak qrupa ekle ve Grupda medya izini açık olsun unutma! veya Botu yönetici yapın_🗣\n_Sonra Komutlarla ile oyunu başladın_🎯\n
+          *Temel Komutların Listesi👇🏻*\n\n🎲 /electro - _Oyunu Başlat_\n⛔️ /stop - _Oyunu durdurmak_\n📊 /top - _Oyuncuların puanı gösterir_\n_🌍 /gtop - Global Puanlar_\nℹ️ /help - _Size yardım edicek_\n👤 /kullanici - _Kullanıcı hakkında bilgi_\n🆔 /id - _Grup infosu_`))
 })
 
 
