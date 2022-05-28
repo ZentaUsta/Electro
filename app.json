@@ -1,0 +1,23 @@
+{
+  "name": "Telegram_Bot",
+  "description": "EğDSFDSFotu.",
+  "repository": "https://github.com/canciyer/test",
+  "logo": "https://avatars.githubusercontent.com/u/71149025",
+  "keywords": ["telegram", "bot"],
+  "env": {
+    "ID_BOT": {
+      "description": "@BotFather'dan oluşturduğunuz botun tokeni.",
+      "value": ""
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "formation": {
+    "worker": {
+      "quantity": 1
+    }
+  }
+}
