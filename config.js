@@ -1,5 +1,5 @@
 module.exports = ({
-	token: "5278187676:AAH2mae3ENdXlyE1ONLfUjK4isxrJDKmZyE",
+	token: "5387254140:AAEstIKpnf2dDTK1R6odfjNzfXjyrXQKFEo",
 	botIsmi: "ElectroGuessGameBot",
 	resmiKanal: "ElectroProj",
 	raundSayi: 5,
